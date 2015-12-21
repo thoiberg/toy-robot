@@ -1,17 +1,25 @@
-require_relative '../toy_robot'
+require 'open3'
+
 require_relative '../lib/robot'
 
 
-describe 'user integration' do
-    let(:script_location) { File.expand_path('../../toy_robot.rb', __FILE__)}
-    let(:execute_script) { `bundle exec ruby #{script_location} 0 0 north` }
+describe 'user interface' do
+    let(:script_path) { File.expand_path('../../toy_robot.rb', __FILE__)}
+    let(:fixture_location) { File.expand_path('../fixtures', __FILE__) }
 
-    it 'can accept the robot starting position and direction as script arguments' do
-        x,y,direction = [0,0,:north]
-        robot = instance_double('Robot')
-        expect(Robot).to receive(:new).and_return(robot)
-        expect(robot).to receive(:place).with(x, y, direction, kind_of(Board))
+    it 'accepts the file path of the command file as an argument' do
+        output, status = execute_script("#{fixture_location}/report_only.rb")
 
-        execute_script
+        expect(status).to eq(0)
+        expect(output).to include('')
     end
+end
+
+
+
+## Helper methods - will refactor these into a separate helper methods file if they need
+# to be reused
+def execute_script(commands_file_path)
+    o, s = Open3.capture2("bundle exec ruby #{script_path} #{commands_file_path}")
+    return o, s
 end
