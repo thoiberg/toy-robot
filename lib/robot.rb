@@ -35,10 +35,12 @@ class Robot
     # @param [Symbol] direction the direction the robot is facing
     # @param [Board] board the board the robot is on
     def place(x_position, y_position, direction, board=Board.new(5,5))
-        @x_position = x_position
-        @y_position = y_position
-        @direction = direction
-        @board = board
+        if board.can_move_to?(x_position, y_position)
+            @x_position = x_position
+            @y_position = y_position
+            @direction = direction
+            @board = board
+        end
     end
 
     ##

@@ -26,7 +26,14 @@ describe Robot do
             expect(subject.board.y_places).to eq(5)
         end
 
-        it 'does not place the robot if the position is out of bounds on the board'
+        it 'does not place the robot if the position is out of bounds on the board' do
+            expect(subject.placed?).to be_falsey
+            subject.place(board.x_places * 2, board.y_places * 2, :north, board)
+
+            expect(subject.placed?).to be_falsey
+            expect(subject.x_position).to be_nil
+            expect(subject.y_position).to be_nil
+        end
     end
 
     describe '#report' do
