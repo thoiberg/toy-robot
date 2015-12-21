@@ -11,7 +11,7 @@ describe 'user interface' do
         output, status = execute_script("#{fixture_location}/report_only.rb")
 
         expect(status).to eq(0)
-        expect(output).to include('')
+        expect(output).to eq(",,\n")
     end
 end
 

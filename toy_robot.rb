@@ -3,12 +3,8 @@
 require_relative 'lib/board'
 require_relative 'lib/robot'
 
-command_file = ARGV[0]
-
-commands = File.read(command_file)
+commands = File.read(ARGV[0])
 
 robot = Robot.new
-board = Board.new(5,5)
-commands.split("\n").each do |command|
 
-end
+robot.execute_commands(commands)

@@ -17,6 +17,14 @@ describe Robot do
             expect(subject.direction).to eq(:north)
             expect(subject.board).to eq(board)
         end
+
+        it 'creates a default Board object if one is not supplied' do 
+            subject.place(0,4,:east)
+
+            expect(subject.board).to be_a_kind_of(Board)
+            expect(subject.board.x_places).to eq(5)
+            expect(subject.board.y_places).to eq(5)
+        end
     end
 
     describe '#report' do
@@ -25,6 +33,18 @@ describe Robot do
 
             expect(STDOUT).to receive(:puts).with('0,0,north')
             subject.report
+        end
+    end
+
+    describe '#execute_commands' do
+        it 'executes a block of commands against itself' do
+            commands = %Q{ place(0,0,:north)
+                           report
+                        }
+
+            expect(STDOUT).to receive(:puts).with('0,0,north')
+
+            subject.execute_commands(commands)
         end
     end
 end
