@@ -1,4 +1,6 @@
 # toy-robot
+[![Build Status](https://travis-ci.org/thoiberg/toy-robot.svg?branch=master)](https://travis-ci.org/thoiberg/toy-robot)
+
 This app simulates a Robot on a table, allowing the user to pass in instructions to move the robot.
 
 ## Usage Instructions
