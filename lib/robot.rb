@@ -53,7 +53,11 @@ class Robot
     # Reports the current position of the robot to STDOUT
     # @return [void]
     def report
-        puts "#{x_position},#{y_position},#{direction}"
+        if placed?
+            puts "#{x_position},#{y_position},#{direction}"
+        else
+            puts "robot has not been placed in a valid location on the board"
+        end
     end
 
     ##
@@ -78,8 +82,6 @@ class Robot
             new_x, new_y = movements.map {|x| x * spaces}
             new_x += @x_position
             new_y += @y_position
-
-            #require 'pry';binding.pry
 
             if @board.can_move_to?(new_x, new_y)
                 @x_position = new_x

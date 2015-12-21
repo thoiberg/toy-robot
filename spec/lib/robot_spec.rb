@@ -43,6 +43,13 @@ describe Robot do
             expect(STDOUT).to receive(:puts).with('0,0,north')
             subject.report
         end
+
+        it 'reports that the robot has not been placed if it has not been placed' do
+            expect(subject.placed?).to be_falsey
+
+            expect(STDOUT).to receive(:puts).with('robot has not been placed in a valid location on the board')
+            subject.report
+        end
     end
 
     describe '#execute_commands' do

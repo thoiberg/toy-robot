@@ -1,8 +1,7 @@
 # toy-robot
 This app simulates a Robot on a table, allowing the user to pass in instructions to move the robot.
 
-Usage Instructions
-------------------
+## Usage Instructions
 
 To use the application run the `toy_robot.rb' script with the DSL file as an argument
 
@@ -62,8 +61,12 @@ valid location
     left
     report      # puts "1,2,west"
 
-Running the Test Suite
-----------------------
+### Examples
+
+There are examples of using the DSL in the `spec/fixtures/` directory
+
+## Running the Test Suite
+
 To run the test suite simply run the following command from the top level directory of the repository
 
     bundle exec rspec

@@ -12,7 +12,7 @@ describe 'functionality' do
             output, status = execute_script("#{fixture_location}/report_only.rb")
 
             expect(status).to eq(0)
-            expect(output).to eq(",,\n")
+            expect(output).to eq("robot has not been placed in a valid location on the board\n")
         end
     end
 
@@ -49,7 +49,7 @@ describe 'functionality' do
             output, status = execute_script("#{fixture_location}/unplaced_robot")
 
             expect(status).to eq(0)
-            expect(output).to eq(",,\n")
+            expect(output).to eq("robot has not been placed in a valid location on the board\n")
         end
 
         it 'can move the robot multiple steps at a time', test: true do
