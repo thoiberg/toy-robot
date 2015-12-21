@@ -129,4 +129,64 @@ describe Robot do
             expect(subject.placed?).to eq(false)
         end
     end
+
+    describe '#left' do 
+        it 'turns the robot to the left' do
+            subject.place(0, 0, :north)
+            expect(subject.direction).to eq(:north)
+            subject.left
+            expect(subject.direction).to eq(:west) 
+
+            subject.place(0, 0, :south)
+            expect(subject.direction).to eq(:south)
+            subject.left
+            expect(subject.direction).to eq(:east) 
+
+            subject.place(0, 0, :west)
+            expect(subject.direction).to eq(:west)
+            subject.left
+            expect(subject.direction).to eq(:south) 
+        end
+
+        it 'does nothing if the robot is not placed' do
+            expect(subject.placed?).to be_falsey
+            subject.left
+
+            expect(subject.placed?).to be_falsey
+            expect(subject.direction).to be_nil
+        end
+    end
+
+    describe '#right' do
+        it 'turns the robot to the right' do
+            subject.place(0, 0, :north)
+            expect(subject.direction).to eq(:north)
+            subject.right
+            expect(subject.direction).to eq(:east) 
+
+            subject.place(0, 0, :west)
+            expect(subject.direction).to eq(:west)
+            subject.right
+            expect(subject.direction).to eq(:north) 
+
+            subject.place(0, 0, :east)
+            expect(subject.direction).to eq(:east)
+            subject.right
+            expect(subject.direction).to eq(:south)
+
+            subject.place(0, 0, :north)
+            expect(subject.direction).to eq(:north)
+            subject.right
+            subject.right
+            expect(subject.direction).to eq(:south) 
+        end
+
+        it 'does nothing if the robot is not placed' do
+            expect(subject.placed?).to be_falsey
+            subject.right
+
+            expect(subject.placed?).to be_falsey
+            expect(subject.direction).to be_nil
+        end
+    end
 end
