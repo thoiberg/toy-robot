@@ -4,4 +4,5 @@ group :development, :test do
     gem 'yard'
     gem 'simplecov'
     gem 'rspec'
+    gem 'pry'
 end
