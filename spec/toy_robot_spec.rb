@@ -56,7 +56,7 @@ describe 'functionality' do
             output, status = execute_script("#{fixture_location}/multiple_steps")
 
             expect(status).to eq(0)
-            #expect(output).to eq("2,3,east\n")
+            expect(output).to eq("2,3,east\n")
         end
 
     end
