@@ -13,6 +13,13 @@ describe 'user interface' do
         expect(status).to eq(0)
         expect(output).to eq(",,\n")
     end
+
+    it 'can move and report on the robots current location' do
+        output, status = execute_script("#{fixture_location}/move_and_report")
+
+        expect(status).to eq(0)
+        expect(output).to eq("0,0,north\n0,1,north\n")
+    end
 end
 
 

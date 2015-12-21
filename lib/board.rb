@@ -17,4 +17,21 @@ class Board
         @x_places = x_places
         @y_places = y_places
     end
+
+    ##
+    # Method to tell if new coordinates are valid on the board. If coordinates
+    # are within the board then the method returns true, otherwise, false
+    # @param [Integer] new_x_position The proposed x axis value for a object
+    #    to move to
+    # @param [Integer] new_y_position The proposed y axis value for a object
+    #    to move to
+    # @return [Boolean] whether the proposed values are for a space that 
+    #    exists on the board
+    def can_move_to?(new_x_position, new_y_position)
+        if (new_x_position <= x_places && new_x_position >= 0) && (new_y_position <= y_places && new_y_position >= 0)
+            true
+        else
+            false
+        end
+    end
 end

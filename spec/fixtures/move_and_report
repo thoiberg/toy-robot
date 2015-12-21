@@ -1,0 +1,4 @@
+place(0, 0, :north)
+report
+move
+report 
