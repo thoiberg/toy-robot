@@ -65,7 +65,7 @@ describe Robot do
             expect(subject.x_position).to eq(0)
             expect(subject.y_position).to eq(2)
 
-            subject.place(0, 0, :west)
+            subject.place(0, 0, :east)
             subject.move(2)
 
             expect(subject.x_position).to eq(2)
@@ -155,6 +155,16 @@ describe Robot do
             expect(subject.placed?).to be_falsey
             expect(subject.direction).to be_nil
         end
+
+        it 'does not change the position of the robot on the board' do
+            subject.place(0, 0, :north)
+
+            subject.left
+
+            expect(subject.direction).to eq(:west)
+            expect(subject.x_position).to eq(0)
+            expect(subject.y_position).to eq(0)
+        end
     end
 
     describe '#right' do
@@ -187,6 +197,16 @@ describe Robot do
 
             expect(subject.placed?).to be_falsey
             expect(subject.direction).to be_nil
+        end
+
+        it 'does not change the position of the robot on the board' do
+            subject.place(0, 0, :north)
+
+            subject.right
+
+            expect(subject.direction).to eq(:east)
+            expect(subject.x_position).to eq(0)
+            expect(subject.y_position).to eq(0)
         end
     end
 end

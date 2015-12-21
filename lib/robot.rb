@@ -23,13 +23,13 @@ class Robot
     NORTH = 0,1
     ##
     # The x and y axis modifiers for a robot moving east.
-    EAST = -1,0
+    EAST = 1,0
     ##
     # The x and y axis modifiers for a robot moving south.
     SOUTH = 0,-1
     ##
     # The x and y axis modifiers for a robot moving west.
-    WEST = 1,0
+    WEST = -1,0
 
     attr_reader :x_position, :y_position, :direction, :board
 
@@ -78,6 +78,8 @@ class Robot
             new_x, new_y = movements.map {|x| x * spaces}
             new_x += @x_position
             new_y += @y_position
+
+            #require 'pry';binding.pry
 
             if @board.can_move_to?(new_x, new_y)
                 @x_position = new_x

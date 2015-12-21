@@ -17,7 +17,6 @@ describe 'functionality' do
     end
 
     describe 'DSL' do
-
         it 'can move and report on the robots current location' do
             output, status = execute_script("#{fixture_location}/move_and_report")
 
@@ -36,8 +35,30 @@ describe 'functionality' do
             output, status = execute_script("#{fixture_location}/prevents_destruction")
 
             expect(status).to eq(0)
-            expect(output).to eq("5,5,north\n3,5,east\n")
+            expect(output).to eq("5,5,north\n3,5,west\n")
         end
+
+        it 'can allow a custom board to be set' do
+            output, status = execute_script("#{fixture_location}/custom_board")
+
+            expect(status).to eq(0)
+            expect(output).to eq("6,8,east\n8,8,east\n")
+        end
+
+        it 'does not move or turn the robot unless it has been placed' do
+            output, status = execute_script("#{fixture_location}/unplaced_robot")
+
+            expect(status).to eq(0)
+            expect(output).to eq(",,\n")
+        end
+
+        it 'can move the robot multiple steps at a time', test: true do
+            output, status = execute_script("#{fixture_location}/multiple_steps")
+
+            expect(status).to eq(0)
+            #expect(output).to eq("2,3,east\n")
+        end
+
     end
 end
 
