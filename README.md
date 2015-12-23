@@ -7,7 +7,12 @@ This app simulates a Robot on a table, allowing the user to pass in instructions
 
 To use the application run the `toy_robot.rb' script with the DSL file as an argument
 
-    bundle exec toy_robot.rb robot_dsl
+    bundle exec toy_robot.rb <ROBOT_DSL>
+
+Where ROBOT_DSL is the file path to a file containing a valid DSL. The `examples` directory has several files that can
+be used as tests.
+
+## toy-robot DSL
 
 The DSL can use the any commands on the Robot class:
 
