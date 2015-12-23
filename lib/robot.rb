@@ -61,15 +61,6 @@ class Robot
     end
 
     ##
-    # Takes a string of commands and instance_evals it to return to execute
-    # commands against itself, to allow the robot to be moved
-    # @param [String] commands a list of commands. Should follow ruby syntax
-    # @return [void]
-    def execute_commands(commands)
-        instance_eval(commands)
-    end
-
-    ##
     # Moves the robot forward in the direction it is facing. If no space counter
     # is given then the robot is moved forward one space. If the robot has not
     # been placed yet the robot will not be moved. Addtionally, if the new position
@@ -112,6 +103,14 @@ class Robot
     # @return [void]
     def right
         turn(:right)
+    end
+
+    ##
+    # Returns the current binding for the Robot object. This can be used to eval commands
+    # against the obect
+    # @return [Binding] current execution context
+    def get_binding
+        binding
     end
 
 

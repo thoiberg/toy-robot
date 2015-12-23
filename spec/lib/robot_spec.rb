@@ -52,16 +52,19 @@ describe Robot do
         end
     end
 
-    describe '#execute_commands' do
-        it 'executes a block of commands against itself' do
-            commands = %Q{ place(0,0,:north)
-                           report
-                        }
+    describe '#get_binding' do
+        it 'returns the current execution binding' do
+            subject.place(0, 0, :east)  # initialising instance_vars to assert binding can use them
+            b = subject.get_binding
 
-            expect(STDOUT).to receive(:puts).with('0,0,north')
+            expect(b).to be_a_kind_of(Binding)
 
-            subject.execute_commands(commands)
+            # having the eval statement inside the expectation cause it to fail - possibly RSpec changing
+            # scope during processing?
+            dir = eval('@direction', b)
+            expect(dir).to eq(:east)
         end
+
     end
 
     describe '#move' do
