@@ -113,6 +113,18 @@ class Robot
         binding
     end
 
+    ##
+    # Catches any undefined method calls. This is mainly used to report to the user when
+    # they have supplied an incorrect method within the DSL and to prevent execution from
+    # halting
+    # @param [Symbol] method_sym the symbol representing the method that was called
+    # @param [Array] args The arguments passed into the original method call
+    # @oaram [Proc] block The block passed into the original method call
+    # @return [void]
+    def method_missing(method_sym, *args, &block)
+        puts "#{self.class} does not know command: #{method_sym}"
+    end
+
 
     private
 

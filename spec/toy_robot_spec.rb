@@ -52,11 +52,19 @@ describe 'functionality' do
             expect(output).to eq("robot has not been placed in a valid location on the board\n")
         end
 
-        it 'can move the robot multiple steps at a time', test: true do
+        it 'can move the robot multiple steps at a time' do
             output, status = execute_script("#{fixture_location}/multiple_steps")
 
             expect(status).to eq(0)
             expect(output).to eq("2,3,east\n")
+        end
+
+        it 'reports on methods it cannot execute and continues with the next steps' do
+            output, status = execute_script("#{fixture_location}/move_with_invalid_commands")
+
+            expect(status).to eq(0)
+            expect(output).to include("Robot does not know command: dance\n")
+            expect(output).to include("3,2,east\n")
         end
 
     end

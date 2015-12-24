@@ -219,4 +219,11 @@ describe Robot do
             expect(subject.y_position).to eq(0)
         end
     end
+
+    describe '#method_missing' do
+        it 'prints a message when a method is unknown' do
+            expect(STDOUT).to receive(:puts).with('Robot does not know command: dance')
+            subject.dance
+        end
+    end
 end
