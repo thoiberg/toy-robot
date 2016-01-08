@@ -3,12 +3,14 @@ require_relative 'board'
 ##
 # Simulates a robot, that is capable of moving forward and 
 # pivoting
-# @attr_reader [Integer] x_position the current X axis position 
-#   of the robot
-# @attr_reader [Integer] y_position the current_y position of
-#   the robot
-# @attr_reader [Symbol] direction the direction the robot is facing
-# @attr_reader [Board] board the board the robot is on
+# @!attribute [r] x_position
+#   @return [Integer] the current X axis position of the robot   
+# @!attribute [r] y_position
+#   @return [Integer] the current y position of the robot
+# @!attribute [r] direction
+#   @return [Symbol] the direction the robot is facing
+# @!attribute [r] board
+#   @return [Board] the board the robot is on
 class Robot
 
     ##
@@ -119,7 +121,7 @@ class Robot
     # halting
     # @param [Symbol] method_sym the symbol representing the method that was called
     # @param [Array] args The arguments passed into the original method call
-    # @oaram [Proc] block The block passed into the original method call
+    # @param [Proc] block The block passed into the original method call
     # @return [void]
     def method_missing(method_sym, *args, &block)
         puts "#{self.class} does not know command: #{method_sym}"
