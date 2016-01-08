@@ -53,8 +53,10 @@ class Robot
 
     ##
     # Reports the current position of the robot to STDOUT
-    # @return [void]
+    # @return [Void]
     def report
+        ## if placed? is a Control Coupling, should look to move all instances of
+        # if placed? to the method caller
         if placed?
             puts "#{x_position},#{y_position},#{direction}"
         else
@@ -68,7 +70,7 @@ class Robot
     # been placed yet the robot will not be moved. Addtionally, if the new position
     # of the robot is outside the board the robot will not be moved
     # @param [Integer] spaces the number of spaces the robot will move forward
-    # @return [void]
+    # @return [Void]
     def move(spaces=1)
         if placed?
             movements = self.class.const_get(@direction.upcase)
@@ -88,23 +90,23 @@ class Robot
     # a board. Returns false if otherwise
     # @return [Boolean] a value indicating whether the robot has been placed on a board
     def placed?
-        !!(@x_position and @y_position) ? true : false
+        !!(@x_position && @y_position)
     end
 
     ##
     # Turns the robot to the left of it's current position. This is mainly a convience
     # method to assist with the DSL that gets executed in `execute_commands`
-    # @return [void]
+    # @return [Void]
     def left
-        turn(:left)
+        @direction = turn_clockwise(-1)
     end
 
     ##
     # Turns the robot to the right of it's current position. This is mainly a convience
     # method to assist with the DSL that gets executed in `execute_commands`
-    # @return [void]
+    # @return [Void]
     def right
-        turn(:right)
+        @direction = turn_clockwise(1)
     end
 
     ##
@@ -122,7 +124,7 @@ class Robot
     # @param [Symbol] method_sym the symbol representing the method that was called
     # @param [Array] args The arguments passed into the original method call
     # @param [Proc] block The block passed into the original method call
-    # @return [void]
+    # @return [Void]
     def method_missing(method_sym, *args, &block)
         puts "#{self.class} does not know command: #{method_sym}"
     end
@@ -131,22 +133,17 @@ class Robot
     private
 
     ## 
-    # Turns the robot in an orientation
-    # @param [Symbol] orientation the orientation the robot should be turned. Valid values are
-    #    `:left` and `:right`
-    # @return [void]
-    def turn(orientation)
+    # Turns the robot clockwise the specified number of times
+    # @param [Integer] turn_count the number of times to turn clockwise in
+    #   to turn counter clockwise use a negative Integer
+    # @return [Symbol] the new position the robot is facing. Will be one of 
+    #   `CARDINAL_DIRECTIONS`
+    def turn_clockwise(turn_count)
         if placed?
-            if orientation == :left
-                move_count = -1
-            elsif orientation == :right
-                move_count = 1
-            end
-
-            # finds the position of the current orientation and modifies it by 1 depending on the current
-            # direction and then returns new position. Wraps around array as necessary
-            new_orientation_index = (CARDINAL_DIRECTIONS.find_index(@direction) + move_count) % CARDINAL_DIRECTIONS.length
-            @direction = CARDINAL_DIRECTIONS[new_orientation_index]
+            # finds the position of the current direction and modifies it by the turn count 
+            # to determine the new direction it's facing. Wraps around array as necessary
+            new_orientation_index = (CARDINAL_DIRECTIONS.find_index(@direction) + turn_count) % CARDINAL_DIRECTIONS.length
+            CARDINAL_DIRECTIONS[new_orientation_index]
         end
     end
 end
