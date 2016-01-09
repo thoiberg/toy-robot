@@ -34,4 +34,6 @@ class Board
             false
         end
     end
+
+    alias_method :can_be_placed_at?, :can_move_to?
 end

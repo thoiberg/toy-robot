@@ -41,4 +41,15 @@ class CommandRunner
     end
   end
 
+  private
+
+  ##
+  # Places the robot on the board. Makes sure the initial coordinates
+  # are valid
+  # @args [Array] args The arguments to pass into the Robot initialisation
+  # @return [Robot] a object of type Robot
+  def place_robot(*args)
+    
+  end
+
 end

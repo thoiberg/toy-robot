@@ -44,11 +44,10 @@ class Robot
   #   starts at
   # @param [String] direction the direction the robot is facing
   # @param [Board] board the game board the robot is placed on
-  def initialize(x_position, y_position, direction, board)
+  def initialize(x_position, y_position, direction)
     @x_position = x_position
     @y_position = y_position
     @direction = direction.to_sym
-    @board = board
   end
 
   ##
@@ -66,14 +65,15 @@ class Robot
   # been placed yet the robot will not be moved. Addtionally, if the new position
   # of the robot is outside the board the robot will not be moved
   # @param [Integer] spaces the number of spaces the robot will move forward
+  # @oaram [Board] board The board the robot will move on
   # @return [Void]
-  def move(spaces=1)
+  def move(spaces=1, board)
     movements = self.class.const_get(@direction.upcase)
       new_x, new_y = movements.map {|x| x * spaces}
       new_x += @x_position
       new_y += @y_position
 
-      if @board.can_move_to?(new_x, new_y)
+      if board.can_move_to?(new_x, new_y)
           @x_position = new_x
           @y_position = new_y
       end

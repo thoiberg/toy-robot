@@ -18,6 +18,16 @@ describe 'functionality' do
         end
     end
 
+    describe 'file processing' do
+      it 'converts each line in the file into a separate hash entry' do
+        execute_script(script_path, args: "#{fixture_location}/move_and_left", use_bundler: true)
+
+        expect(last_execution).to be_successful
+        expect(last_execution.stdout).to be_empty
+      end
+    end
+    
+
     describe 'DSL' do
         it 'can move and report on the robots current location' do
             execute_script(script_path, args: "#{fixture_location}/move_and_report", use_bundler: true)
