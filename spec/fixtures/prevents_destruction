@@ -1,4 +1,4 @@
-place(5, 5, :north)
+place 5,5,north
 move
 move
 move

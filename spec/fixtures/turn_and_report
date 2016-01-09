@@ -1,4 +1,4 @@
-place(0, 0, :north)
+place 0,0,north
 left
 left
 left

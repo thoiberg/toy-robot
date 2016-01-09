@@ -14,7 +14,7 @@ describe 'functionality' do
             execute_script(script_path, args: "#{fixture_location}/report_only.rb", use_bundler: true)
 
             expect(last_execution).to be_successful
-            expect(last_execution.stdout).to eq("robot has not been placed in a valid location on the board\n")
+            expect(last_execution.stdout).to eq("")
         end
     end
 
@@ -50,18 +50,11 @@ describe 'functionality' do
             expect(last_execution.stdout).to eq("5,5,north\n3,5,west\n")
         end
 
-        it 'can allow a custom board to be set' do
-            execute_script(script_path, args: "#{fixture_location}/custom_board", use_bundler: true)
-
-            expect(last_execution).to be_successful
-            expect(last_execution.stdout).to eq("6,8,east\n8,8,east\n")
-        end
-
         it 'does not move or turn the robot unless it has been placed' do
             execute_script(script_path, args: "#{fixture_location}/unplaced_robot", use_bundler: true)
 
             expect(last_execution).to be_successful
-            expect(last_execution.stdout).to eq("robot has not been placed in a valid location on the board\n")
+            expect(last_execution.stdout).to eq("")
         end
 
         it 'can move the robot multiple steps at a time' do
@@ -70,14 +63,5 @@ describe 'functionality' do
             expect(last_execution).to be_successful
             expect(last_execution.stdout).to eq("2,3,east\n")
         end
-
-        it 'reports on methods it cannot execute and continues with the next steps' do
-            execute_script(script_path, args: "#{fixture_location}/move_with_invalid_commands", use_bundler: true)
-
-            expect(last_execution).to be_successful
-            expect(last_execution.stdout).to include("Robot does not know command: dance\n")
-            expect(last_execution.stdout).to include("3,2,east\n")
-        end
-
     end
 end

@@ -33,10 +33,11 @@ class CommandRunner
   # @param [Hash] cmds the commands passed in from the file. The key
   #   of the hash is the command to execute and the values is an array of
   #   arguments to pass to the command
-  def run_commands(cmds)
+  def run_command(cmds)
     cmds.each do |cmd, args|
       unless @robot.nil? and cmd != 'place'
-        send("#{cmd.to_sym}_robot", *args)
+        method = "#{cmd.to_sym}_robot"
+        send(method, *args) if respond_to?(method.to_sym, true)
       end
     end
   end
@@ -51,6 +52,8 @@ class CommandRunner
   # @args [String] direction The direction the robot is facing
   # @return [Void]
   def place_robot(x_position, y_position, direction)
+    x_position = x_position.to_i
+    y_position = y_position.to_i
     if @board.can_be_placed_at? x_position, y_position
         @robot = Robot.new(x_position, y_position, direction)
     end
@@ -64,6 +67,7 @@ class CommandRunner
   # @param [Integer] y_position the new y axis position for the robot 
   # @return [Void]
   def move_robot(spaces=1)
+    spaces = spaces.to_i
     if @board.can_move_to? *@robot.new_position(spaces)
         @robot.move spaces
     end
@@ -76,6 +80,7 @@ class CommandRunner
     puts "#{@robot.x_position},#{@robot.y_position},#{@robot.direction}"
   end
 
+  # 
   def_delegators :@robot, :left, :right
   alias_method :left_robot, :left
   alias_method :right_robot, :right
