@@ -1,3 +1,5 @@
+require 'forwardable'
+
 require_relative 'board'
 require_relative 'robot'
 
@@ -10,6 +12,8 @@ require_relative 'robot'
 #   @return [Robot] the robot being moved around. Until a robot is
 #     placed on the board the robot is `nil`
 class CommandRunner
+  extend Forwardable
+
   attr_reader :board, :robot
 
   ##
@@ -31,12 +35,8 @@ class CommandRunner
   #   arguments to pass to the command
   def run_commands(cmds)
     cmds.each do |cmd, args|
-      if cmd == 'place'
-        @robot = Robot.new(*args, @board)
-      end
-
-      unless @robot.nil?
-        @robot.send(cmd.to_sym, *args)
+      unless @robot.nil? and cmd != 'place'
+        send("#{cmd.to_sym}_robot", *args)
       end
     end
   end
@@ -45,11 +45,38 @@ class CommandRunner
 
   ##
   # Places the robot on the board. Makes sure the initial coordinates
-  # are valid
-  # @args [Array] args The arguments to pass into the Robot initialisation
-  # @return [Robot] a object of type Robot
-  def place_robot(*args)
-    
+  # are valid. If they are then the `@robot` variable is updated
+  # @args [Integer] x_position The x_position to initialise the robot
+  # @args [Integer] y_position The x_position to initialise the robot
+  # @args [String] direction The direction the robot is facing
+  # @return [Void]
+  def place_robot(x_position, y_position, direction)
+    if @board.can_be_placed_at? x_position, y_position
+        @robot = Robot.new(x_position, y_position, direction)
+    end
   end
 
+  ##
+  # Moves the robot. First checks to determine if the new position
+  # exists on the board. If it does then the robot is moved, otherwise
+  # it stays where it is
+  # @param [Integer] x_position the new x axis position for the robot
+  # @param [Integer] y_position the new y axis position for the robot 
+  # @return [Void]
+  def move_robot(spaces=1)
+    if @board.can_move_to? *@robot.new_position(spaces)
+        @robot.move spaces
+    end
+  end
+
+  ##
+  # Reports the current position and orientation of the robot
+  # @return [Void]
+  def report_robot
+    puts "#{@robot.x_position},#{@robot.y_position},#{@robot.direction}"
+  end
+
+  def_delegators :@robot, :left, :right
+  alias_method :left_robot, :left
+  alias_method :right_robot, :right
 end

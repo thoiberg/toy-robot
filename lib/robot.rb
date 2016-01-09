@@ -9,8 +9,6 @@ require_relative 'board'
 #   @return [Integer] the current y position of the robot
 # @!attribute [r] direction
 #   @return [Symbol] the direction the robot is facing
-# @!attribute [r] board
-#   @return [Board] the board the robot is on
 class Robot
 
   ##
@@ -33,7 +31,7 @@ class Robot
   # The x and y axis modifiers for a robot moving west.
   WEST = -1,0
 
-  attr_reader :x_position, :y_position, :direction, :board
+  attr_reader :x_position, :y_position, :direction
 
   ##
   # Initialises the robot with it's starting position on the supplied
@@ -43,7 +41,6 @@ class Robot
   # @param [Integer] y_position The y axis position that the robot
   #   starts at
   # @param [String] direction the direction the robot is facing
-  # @param [Board] board the game board the robot is placed on
   def initialize(x_position, y_position, direction)
     @x_position = x_position
     @y_position = y_position
@@ -61,46 +58,56 @@ class Robot
 
   ##
   # Moves the robot forward in the direction it is facing. If no space counter
-  # is given then the robot is moved forward one space. If the robot has not
-  # been placed yet the robot will not be moved. Addtionally, if the new position
-  # of the robot is outside the board the robot will not be moved
+  # is given then the robot is moved forward one space.
   # @param [Integer] spaces the number of spaces the robot will move forward
-  # @oaram [Board] board The board the robot will move on
   # @return [Void]
-  def move(spaces=1, board)
-    movements = self.class.const_get(@direction.upcase)
-      new_x, new_y = movements.map {|x| x * spaces}
-      new_x += @x_position
-      new_y += @y_position
-
-      if board.can_move_to?(new_x, new_y)
-          @x_position = new_x
-          @y_position = new_y
-      end
+  def move(spaces)
+    @x_position, @y_position = new_position(spaces)
   end
 
   ##
-  # Turns the robot to the left of it's current position. This is mainly a convience
-  # method to assist with the DSL that gets executed in `execute_commands`
+  # Turns the robot to the left of it's current position.
   # @return [Void]
   def left
       @direction = turn_clockwise(-1)
   end
 
   ##
-  # Turns the robot to the right of it's current position. This is mainly a convience
-  # method to assist with the DSL that gets executed in `execute_commands`
+  # Turns the robot to the right of it's current position.
   # @return [Void]
   def right
       @direction = turn_clockwise(1)
   end
 
+  ##
+  # returns the x and y coordinate modifiers for the current direction
+  # @return [Integer, Integer] the x and y axis modifiers based on the 
+  #   current direction the robot is facing
+  def movement_modifiers
+    self.class.const_get(@direction.upcase)
+  end
+
+  ##
+  # returns the new x and y coordinates of the robot if it were to move
+  # the given spaces in the x and y direction
+  # @param [Integer] spaces_to_move The amount of spaces in the currently
+  #   facing direction to move
+  # @return [Array <Integer>] The new x and y coordinates
+  def new_position(spaces_to_move)
+    x_modifier, y_modifier = movement_modifiers
+    new_x = @x_position + (spaces_to_move * x_modifier)
+    new_y = @y_position + (spaces_to_move * y_modifier)
+
+    return new_x, new_y
+  end
+
+
   private
 
   ## 
   # Turns the robot clockwise the specified number of times
-  # @param [Integer] turn_count the number of times to turn clockwise in
-  #   to turn counter clockwise use a negative Integer
+  # @param [Integer] turn_count the number of times to turn clockwise.
+  #   To turn counter clockwise use a negative Integer
   # @return [Symbol] the new position the robot is facing. Will be one of 
   #   `CARDINAL_DIRECTIONS`
   def turn_clockwise(turn_count)
