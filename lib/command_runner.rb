@@ -1,5 +1,3 @@
-require 'forwardable'
-
 require_relative 'board'
 require_relative 'robot'
 
@@ -12,7 +10,6 @@ require_relative 'robot'
 #   @return [Robot] the robot being moved around. Until a robot is
 #     placed on the board the robot is `nil`
 class CommandRunner
-  extend Forwardable
 
   attr_reader :board, :robot
 
@@ -84,8 +81,18 @@ class CommandRunner
     puts "#{@robot.x_position},#{@robot.y_position},#{@robot.direction}"
   end
 
-  # 
-  def_delegators :@robot, :left, :right
-  alias_method :left_robot, :left
-  alias_method :right_robot, :right
+  ##
+  # Turns the robot left
+  # @return [Void]
+  def left_robot
+    @robot.left
+  end
+
+  ##
+  # Turns the robot right
+  # @return [Void]
+  def right_robot
+    @robot.right
+  end
+
 end
