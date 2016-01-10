@@ -50,7 +50,7 @@ describe Robot do
   end
 
   describe '#new_position' do
-    it 'returns the new position of the robot', test: true do
+    it 'returns the new position of the robot' do
       robot = Robot.new(0, 0, :north)
       new_x, new_y = robot.new_position(3)
 

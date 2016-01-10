@@ -13,13 +13,12 @@ describe CommandRunner do
     end
   end
 
-  describe '#run_command' do
+  describe '#method_missing' do
     it 'does not run a command if the robot has not been placed' do
-      cmds = {'move' => [], 'report' => []}
-
       expect(command_runner.robot).to be_nil
 
-      command_runner.run_command(cmds)
+      command_runner.move
+      command_runner.report
 
       expect(command_runner.robot).to be_nil
     end
@@ -29,7 +28,7 @@ describe CommandRunner do
 
       expect(command_runner.robot).to be_nil
 
-      command_runner.run_command(cmds)
+      command_runner.place('0', '0', 'north')
 
       expect(command_runner.robot).to be_a_kind_of(Robot)
       expect(command_runner.robot.x_position).to eq(0)
@@ -38,21 +37,18 @@ describe CommandRunner do
     end
 
     context 'with a placed robot' do
-      ## TODO: find a nicer way to stub this out
-      let(:cmds) { {'place' => ['0','0','north']} }
+      before(:each) do
+        command_runner.place(0, 0, :north)
+      end
 
       it 'runs a command if the robot' do
-        cmds.update('move' => ['2'])
-
-        command_runner.run_command(cmds)
+        command_runner.move(2)
 
         expect(command_runner.robot.y_position).to eq(2)
       end
 
       it 'moves the robot one space if move is called with no arguments' do
-        cmds.update('move' => [])
-
-        command_runner.run_command(cmds)
+        command_runner.move
 
         expect(command_runner.robot.y_position).to eq(1)
       end
@@ -60,23 +56,30 @@ describe CommandRunner do
       it 'writes to STDOUT if the report command is executed' do
         expect(STDOUT).to receive(:puts).with('0,0,north')
 
-        cmds.update('report' => [])
-        command_runner.run_command(cmds)
+        command_runner.report
       end
 
       it 'can turn the robot left' do
-        cmds.update('left' => [])
-        command_runner.run_command(cmds)
+        command_runner.left
 
         expect(command_runner.robot.direction).to be(:west)
       end
 
       it 'can turn a robot right' do
-        cmds.update('right' => [])
-        command_runner.run_command(cmds)
+        command_runner.right
 
         expect(command_runner.robot.direction).to be(:east)
       end
+    end
+  end
+
+  describe '#respond_to_missing?' do
+    it 'is true if the there is a method that matches the convention' do
+      expect(command_runner.respond_to? :place).to be_truthy
+    end
+
+    it 'returns false if the argument does not match the convention' do
+      expect(command_runner.respond_to? :dance).to be_falsey
     end
   end
 end

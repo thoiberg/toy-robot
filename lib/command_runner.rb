@@ -30,16 +30,20 @@ class CommandRunner
   #   smell real soon.
   # Runs commands against the Robot on the board. Until the robot
   # is placed any other commands will be ignored
-  # @param [Hash] cmds the commands passed in from the file. The key
-  #   of the hash is the command to execute and the values is an array of
-  #   arguments to pass to the command
-  def run_command(cmds)
-    cmds.each do |cmd, args|
-      unless @robot.nil? and cmd != 'place'
-        method = "#{cmd.to_sym}_robot"
-        send(method, *args) if respond_to?(method.to_sym, true)
+  # @param [Symbol] method the command passed in for the UI.
+  # @param [Array<String>] args Any arguments passed in from the command
+  # @paramn [Block] blk An optional block passed in
+  def method_missing(method_name, *args, &blk)
+    
+    unless @robot.nil? and method_name != :place
+      method = "#{method_name}_robot"
+      send(method, *args) if respond_to?(method.to_sym, true)
       end
-    end
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
+    method = "#{method_name}_robot".to_sym
+    (methods.include? method or private_methods.include? method) || super
   end
 
   private

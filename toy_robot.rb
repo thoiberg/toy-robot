@@ -2,6 +2,7 @@
 
 require_relative 'lib/command_runner'
 require_relative 'lib/board'
+require_relative 'lib/string_utility'
 
 # TODO: add error handling for nonexistent file, empty file
 command_text = File.read(ARGV[0])
@@ -14,10 +15,8 @@ commands = command_text.split("\n")
 commands.each do |command|
   # TODO: refactor into separate utility class
   unless command.empty?
-    command_parts = command.split(' ')
-    cmd = command_parts.shift
-    args = command_parts.join(',').split(',')
+    cmd, args = StringUtility.format_string_for_execution(command)
 
-    command_runner.run_command(cmd => args)
+    command_runner.send(cmd.to_sym, *args)
   end
 end
