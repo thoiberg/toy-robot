@@ -25,10 +25,24 @@ describe 'functionality' do
         expect(last_execution).to be_successful
         expect(last_execution.stdout).to be_empty
       end
+
+      it 'displays a message to the user when the file does not exist' do
+        execute_script(script_path, args: 'i/dont/exist', use_bundler: true)
+
+        expect(last_execution).not_to be_successful
+        expect(last_execution.stdout).to eq("File: i/dont/exist could not be found\n")
+      end
+
+      it 'does not fail if the file is empty' do
+        execute_script(script_path, args: "#{fixture_location}/empty_file", use_bundler: true)
+
+        expect(last_execution).to be_successful
+        expect(last_execution.stdout).to be_empty
+      end
     end
     
 
-    describe 'DSL' do
+    describe 'Robot game' do
         it 'can move and report on the robots current location' do
             execute_script(script_path, args: "#{fixture_location}/move_and_report", use_bundler: true)
 

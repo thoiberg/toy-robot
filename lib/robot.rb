@@ -1,5 +1,3 @@
-require_relative 'board'
-
 ##
 # Simulates a robot, that is capable of moving forward and 
 # pivoting

@@ -1,3 +1,5 @@
+##
+# module with utility methods for formatting strings
 module StringUtility
   extend self
 
