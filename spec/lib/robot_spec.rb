@@ -10,14 +10,6 @@ describe Robot do
       robot = Robot.new(0, 0, 'north')
       expect(robot).to be_a_kind_of(Robot)
     end
-
-    it 'can convert strings into Ruby objects' do
-      robot = Robot.new('0', '0', 'north')
-
-      expect(robot.x_position).to be_a_kind_of(Integer)
-      expect(robot.y_position).to be_a_kind_of(Integer)
-      expect(robot.direction).to be_a_kind_of(Symbol)
-    end
   end
 
   describe '#report' do

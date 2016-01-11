@@ -1,7 +1,4 @@
-require 'open3'
 require 'cli-test'
-
-require_relative '../lib/robot'
 
 describe 'functionality' do
     include CliTest
@@ -41,7 +38,6 @@ describe 'functionality' do
       end
     end
     
-
     describe 'Robot game' do
         it 'can move and report on the robots current location' do
             execute_script(script_path, args: "#{fixture_location}/move_and_report", use_bundler: true)

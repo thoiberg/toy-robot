@@ -30,7 +30,7 @@ class ToyInterface
   # @param [Integer, String] spaces the amount of spaces to move thetoy forward
   # @return [Void]
   def move(spaces=1)
-    spaces = spaces.to_i
+    spaces = spaces
     if @board.can_move_to? *@toy.new_position(spaces)
         @toy.move spaces
     end
