@@ -10,8 +10,6 @@ require_relative 'robot'
 #     placed on the board thetoy is nil
 class ToyInterface
 
-  attr_reader :board, :toy
-
   # initialises the object.
   # @param [Board] board the game board to play on
   # @return [ToyInterface] the created instance
@@ -19,7 +17,7 @@ class ToyInterface
     @board = board
     @toy = toy
 
-    unless @board.can_be_placed_at? @toy.x_position, @toy.y_position
+    unless @board.can_be_placed_at? *@toy.current_position
       raise ArgumentError.new("#{@toy.class} cannot be placed")
     end
   end

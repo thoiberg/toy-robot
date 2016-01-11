@@ -20,31 +20,30 @@ describe ToyInterface do
 
   describe '#move' do
     it 'moves the toy the set amount of spaces' do
-      expect(toy_interface.toy.y_position).to eq(0)
+      expect(robot.current_position).to eq([0,0])
       toy_interface.move
 
-      expect(toy_interface.toy.y_position).to eq(1)
+      expect(robot.current_position).to eq([0,1])
     end
 
     it 'does not move the toy if the new position is off the board' do
-      expect(toy_interface.toy.y_position).to eq(0)
-      toy_interface.move 100
+      expect(robot.current_position).to eq([0,0])
 
-      expect(toy_interface.toy.y_position).to eq(0)
+      expect(robot.current_position).to eq([0,0])
     end
   end
   
   describe '#left' do
     it 'turns the toy to the left' do
       toy_interface.left
-      expect(toy_interface.toy.direction).to be(:west)
+      expect(robot.direction).to be(:west)
     end
   end
 
   describe '#right' do
     it 'turns the toy to the right' do
       toy_interface.right
-      expect(toy_interface.toy.direction).to be(:east)
+      expect(robot.direction).to be(:east)
     end
   end
 

@@ -26,7 +26,7 @@ class Robot
   # The x and y axis modifiers for a robot moving west.
   WEST = -1,0
 
-  attr_reader :x_position, :y_position, :direction
+  attr_reader :direction
 
   # Initialises the robot with it's starting position on the supplied
   # board
@@ -44,7 +44,7 @@ class Robot
   # Returns data about it's current position and orientation
   # @return [Array] the current position and orientation
   def report_data
-    [x_position, y_position, direction]
+    current_position << @direction
   end
 
   # Moves the robot forward in the direction it is facing. If no space counter
@@ -86,6 +86,14 @@ class Robot
 
     return new_x, new_y
   end
+
+  # returns the current x and y position of the current position of the 
+  # robot
+  # @return [Array<Integer>] The x and y coordinates of the robot
+  def current_position
+    [@x_position, @y_position]
+  end
+
 
 
   private

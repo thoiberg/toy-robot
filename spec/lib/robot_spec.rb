@@ -14,8 +14,7 @@ describe Robot do
 
   describe '#report' do
     it 'reports its current position and direction' do
-      rd = subject.report_data
-      expect(rd).to eq([0,0,:north])
+      expect(subject.report_data).to eq([0,0,:north])
     end
   end
 
@@ -23,28 +22,25 @@ describe Robot do
     it 'the robot the amount of spaces in the direction it is facing' do
       subject.move(2)
 
-      expect(subject.x_position).to eq(0)
-      expect(subject.y_position).to eq(2)
+      expect(subject.current_position).to eq([0,2])
 
       subject = Robot.new(0, 0, 'east')
       subject.move(2)
-      expect(subject.x_position).to eq(2)
-      expect(subject.y_position).to eq(0)
+
+      expect(subject.current_position).to eq([2,0])
     end
 
     it 'no spaces if the count is 0' do
       subject.move(0)
 
-      expect(subject.x_position).to eq(0)
-      expect(subject.y_position).to eq(0)
+      expect(subject.current_position).to eq([0,0])
     end
 
     it 'in the opposite direction if a negative count is given' do
       robot = Robot.new(2, 5, :north)
       robot.move(-2)
 
-      expect(robot.x_position).to eq(2)
-      expect(robot.y_position).to eq(3)
+      expect(robot.current_position).to eq([2,3])
       expect(robot.direction).to eq(:north)
     end
   end
@@ -70,8 +66,8 @@ describe Robot do
 
       expect(new_x).to eq(0)
       expect(new_y).to eq(3)
-      expect(robot.x_position).to eq(0)
-      expect(robot.y_position).to eq(0)
+
+      expect(robot.current_position).to eq([0,0])
     end
   end
 
@@ -97,8 +93,7 @@ describe Robot do
       subject.left
 
       expect(subject.direction).to eq(:west)
-      expect(subject.x_position).to eq(0)
-      expect(subject.y_position).to eq(0)
+      expect(subject.current_position).to eq([0,0])
     end
   end
 
@@ -130,8 +125,7 @@ describe Robot do
       subject.right
 
       expect(subject.direction).to eq(:east)
-      expect(subject.x_position).to eq(0)
-      expect(subject.y_position).to eq(0)
+      expect(subject.current_position).to eq([0,0])
     end
   end
 
@@ -148,6 +142,15 @@ describe Robot do
 
       robot = Robot.new(0,0, :south)
       expect(robot.movement_modifiers).to eq(Robot::SOUTH)  
+    end
+  end
+
+  describe '#current_position' do
+    it 'returns the current position as an array' do
+      coordinates = subject.current_position
+      
+      expect(coordinates).to be_a_kind_of(Array)
+      expect(coordinates).to eq([0,0])
     end
   end
 end
