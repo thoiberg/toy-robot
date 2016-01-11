@@ -77,5 +77,11 @@ describe 'functionality' do
             expect(last_execution).to be_successful
             expect(last_execution.stdout).to eq("2,3,east\n")
         end
+
+        it 'does not error if the command is given invalid commands' do
+            execute_script(script_path, args: "#{fixture_location}/invalid_commands", use_bundler: true)
+
+            expect(last_execution).to be_successful
+        end
     end
 end

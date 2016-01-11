@@ -40,8 +40,8 @@ class Robot
   #   starts at
   # @param [String] direction the direction the robot is facing
   def initialize(x_position, y_position, direction)
-    @x_position = x_position
-    @y_position = y_position
+    @x_position = x_position.to_i
+    @y_position = y_position.to_i
     @direction = direction.to_sym
   end
 
