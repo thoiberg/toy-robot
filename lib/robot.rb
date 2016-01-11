@@ -46,12 +46,10 @@ class Robot
   end
 
   ##
-  # @todo move report method outside robot. Robot doesn't need to
-  #   know how to format and display current position
-  # Reports the current position of the robot to STDOUT
-  # @return [Void]
-  def report
-   puts "#{x_position},#{y_position},#{direction}"
+  # Returns data about it's current position and orientation
+  # @return [Array] the current position and orientation
+  def report_data
+    [x_position, y_position, direction]
   end
 
   ##

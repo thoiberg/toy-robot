@@ -11,13 +11,17 @@ rescue Errno::ENOENT
   exit(1)
 end
 
-
-board = Board.new(5,5)
-command_runner = CommandRunner.new(board)
+command_runner = nil
 
 commands = command_text.split("\n").reject(&:empty?)
 commands.each do |command|
     cmd, args = StringUtility.format_string_for_execution(command)
 
-    command_runner.send(cmd.to_sym, *args) if command_runner.respond_to? cmd.to_sym
+    if cmd = 'place'
+      board = Board.new(5,5)
+      robot = Robot.new(*args)
+      command_runner = CommandRunner.new(board, robot)
+    else
+      command_runner.send(cmd.to_sym, *args) if command_runner.respond_to? cmd.to_sym
+    end
 end

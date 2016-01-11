@@ -14,8 +14,8 @@ describe Robot do
 
   describe '#report' do
     it 'reports its current position and direction' do
-      expect(STDOUT).to receive(:puts).with('0,0,north')
-      subject.report
+      rd = subject.report_data
+      expect(rd).to eq([0,0,:north])
     end
   end
 
