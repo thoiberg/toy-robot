@@ -3,11 +3,25 @@
 
 This app simulates a Robot on a table, allowing the user to pass in instructions to move the robot.
 
+This was written in Ruby 2.2.2, but has Travis CI builds to test:
+
+ - Ruby 2.0.0
+ - Ruby 2.1.7
+ - Ruby 2.2.2
+
+## Setup
+
+To run this app, clone this git repository and in the top level directory, run:
+
+    $ bundle install
+
+To install the all the dependencies needed for execution
+
 ## Usage Instructions
 
 To use the application run the `toy_robot.rb' script with the command file as the argument
 
-    bundle exec toy_robot.rb <ROBOT_COMMANDS>
+    $ bundle exec toy_robot.rb <ROBOT_COMMANDS>
 
 Where ROBOT_COMMANDS is the file path to a file containing valid commands. The `examples` directory has several files that can
 be used as tests.
@@ -24,7 +38,7 @@ The command file can use the any commands on the Robot class:
 
 If the robot is not placed on the board then it cannot move or turn left or right. To place the robot call
 the `place` command with the starting x and y co-ordinates and the cardinal direction it's facing (north, 
-east, south, west)
+east, south, west). The robot is placed on a board 5 x 5 spaces.
 
     place 0,0,north
 
