@@ -1,7 +1,7 @@
 describe ToyRobot::CommandRunner do
 
   let(:game) { instance_double ToyRobot::Game }
-  let(:writer) { double 'writer' }
+  let(:writer) { class_double ToyRobot::Writers::STDOUTWriter }
   let(:subject) { described_class.new game, writer }
 
   describe '#run' do
