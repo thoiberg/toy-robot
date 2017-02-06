@@ -1,4 +1,6 @@
 require 'simplecov'
+require 'faker'
+
 require_relative '../lib/init'
 
 SimpleCov.start do
