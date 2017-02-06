@@ -4,17 +4,18 @@ describe ToyRobot::Parsers::YAMLParser do
 
     let(:commands_file_path) { Faker::StarWars.wookie_sentence }
     let(:subject) { described_class.parse commands_file_path }
-    let(:commands) { [Faker::StarWars.wookie_sentence] }
+    let(:command_list) { [Faker::StarWars.wookie_sentence] }
     let(:commands_class) { ToyRobot::Commands }
     let(:yaml_data) do
       {
-          "commands" => commands
+          "commands" => command_list
       }
     end
+    let(:commands) { instance_double commands_class }
 
     before do
       allow(YAML).to receive(:load_file).and_return yaml_data
-      allow(commands_class).to receive :new
+      allow(commands_class).to receive(:new).and_return commands
     end
 
     it 'parses the file' do
@@ -30,7 +31,11 @@ describe ToyRobot::Parsers::YAMLParser do
       end
 
       it 'creates a Commands object with the returned data' do
-        expect(commands_class).to have_received(:new).with commands
+        expect(commands_class).to have_received(:new).with command_list
+      end
+
+      it 'returns the Commands object' do
+        expect(subject).to eq commands
       end
 
     end

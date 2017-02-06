@@ -5,10 +5,23 @@ require_relative 'lib/init'
 
 def main commands_file_path
   commands = yaml_parser.parse commands_file_path
+  command_runner = create_command_runner
 end
 
 def yaml_parser
   ToyRobot::ParserFactory.yaml_parser
+end
+
+def create_command_runner
+  ToyRobot::CommandRunner.new game, writer
+end
+
+def game
+
+end
+
+def writer
+
 end
 
 
