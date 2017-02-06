@@ -12,25 +12,25 @@ describe ToyRobot::Game do
 
     before do
       allow(toy).to receive :place
-      allow(board).to receive :valid_position?
+      allow(board).to receive :can_move_to?
     end
 
     it 'checks if the x coordinate is a valid position on the board' do
       subject.place_toy x_coordinate, y_coordinate, orientation
 
-      expect(board).to have_received(:valid_position?).with x_coordinate, anything
+      expect(board).to have_received(:can_move_to?).with x_coordinate, anything
     end
 
     it 'checks if the y coordinate is a valid position on the board' do
       subject.place_toy x_coordinate, y_coordinate, orientation
 
-      expect(board).to have_received(:valid_position?).with anything, y_coordinate
+      expect(board).to have_received(:can_move_to?).with anything, y_coordinate
     end
 
     context 'when the coordinates are a valid position on the board' do
 
       before do
-        allow(board).to receive(:valid_position?).with(x_coordinate, y_coordinate).and_return true
+        allow(board).to receive(:can_move_to?).with(x_coordinate, y_coordinate).and_return true
 
         subject.place_toy x_coordinate, y_coordinate, orientation
       end
@@ -52,7 +52,7 @@ describe ToyRobot::Game do
     context 'when the coordinates are not a valid position on the board' do
 
       before do
-        allow(board).to receive(:valid_position?).with(x_coordinate, y_coordinate).and_return false
+        allow(board).to receive(:can_move_to?).with(x_coordinate, y_coordinate).and_return false
 
         subject.place_toy x_coordinate, y_coordinate, orientation
       end
@@ -73,7 +73,7 @@ describe ToyRobot::Game do
     before do
       allow(toy).to receive(:new_position_if_moved).and_return [new_x, new_y]
       allow(toy).to receive :move
-      allow(board).to receive(:valid_position?)
+      allow(board).to receive(:can_move_to?)
     end
 
     it 'checks what the new position would be' do
@@ -85,13 +85,13 @@ describe ToyRobot::Game do
     it 'checks that the new position is valid on the board' do
       subject.move_toy
 
-      expect(board).to have_received(:valid_position?).with(new_x, new_y)
+      expect(board).to have_received(:can_move_to?).with(new_x, new_y)
     end
 
     context 'when the new position is a valid position on the board' do
 
       before do
-        allow(board).to receive(:valid_position?).with(new_x, new_y).and_return true
+        allow(board).to receive(:can_move_to?).with(new_x, new_y).and_return true
 
         subject.move_toy
       end
@@ -105,7 +105,7 @@ describe ToyRobot::Game do
     context 'when the new position is not a valid position on the board' do
 
       before do
-        allow(board).to receive(:valid_position?).with(new_x, new_y).and_return false
+        allow(board).to receive(:can_move_to?).with(new_x, new_y).and_return false
 
         subject.move_toy
       end

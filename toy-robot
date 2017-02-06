@@ -21,7 +21,7 @@ def game
 end
 
 def board
-
+  ToyRobot::Board.new 5, 5
 end
 
 def robot

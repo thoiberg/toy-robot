@@ -5,6 +5,7 @@ require_relative 'commands'
 require_relative 'command_runner'
 
 require_relative 'game'
+require_relative 'board'
 require_relative 'exceptions'
 
 require_relative 'writer_factory'

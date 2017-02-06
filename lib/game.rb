@@ -35,7 +35,7 @@ module ToyRobot
     private
 
     def position_valid_on_board? x_coordinate, y_coordinate
-      @board.valid_position? x_coordinate, y_coordinate
+      @board.can_move_to? x_coordinate, y_coordinate
     end
 
   end
