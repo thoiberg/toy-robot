@@ -7,7 +7,7 @@ module ToyRobot
     def_delegators :@commands, :each
 
     def initialize commands
-      @commands = commands
+      @commands = commands.map { |command| command.downcase }
     end
 
   end
