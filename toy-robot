@@ -17,6 +17,14 @@ def create_command_runner
 end
 
 def game
+  ToyRobot::Game.new board, robot
+end
+
+def board
+
+end
+
+def robot
 
 end
 

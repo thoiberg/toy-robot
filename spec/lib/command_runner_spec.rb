@@ -1,6 +1,6 @@
 describe ToyRobot::CommandRunner do
 
-  let(:game) { double 'game' }
+  let(:game) { instance_double ToyRobot::Game }
   let(:writer) { double 'writer' }
   let(:subject) { described_class.new game, writer }
 
