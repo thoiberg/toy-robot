@@ -10,3 +10,6 @@ require_relative 'exceptions'
 
 require_relative 'writer_factory'
 require_relative 'writers/all'
+
+require_relative 'toy_factory'
+require_relative 'toys/all'
