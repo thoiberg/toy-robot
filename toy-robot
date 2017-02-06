@@ -13,7 +13,7 @@ def yaml_parser
 end
 
 def create_command_runner
-  ToyRobot::CommandRunner.new game, writer
+  ToyRobot::CommandRunner.new game, stdout_writer
 end
 
 def game
@@ -28,8 +28,8 @@ def robot
 
 end
 
-def writer
-
+def stdout_writer
+  ToyRobot::WriterFactory.stdout_writer
 end
 
 
