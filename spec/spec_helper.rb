@@ -1,4 +1,5 @@
 require 'simplecov'
+require_relative '../lib/init'
 
 SimpleCov.start do
   add_filter 'spec/'

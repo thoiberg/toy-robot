@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require_relative 'lib/init'
+
+commands_file_path = ARGV[0]
+
+commands = yaml_parser.parse commands_file_path
+
+def yaml_parser
+  ToyRobot::ParserFactory.yaml_parser
+end
