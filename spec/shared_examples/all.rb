@@ -1,0 +1,2 @@
+require_relative 'cardinal_directions_movable'
+require_relative 'toys'
