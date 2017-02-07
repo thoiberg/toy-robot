@@ -2,17 +2,18 @@ describe ToyRobot::Game do
 
   let(:board) { instance_double ToyRobot::Board }
   let(:toy) { instance_double ToyRobot::Toys::Robot }
+  let(:writer) { class_double ToyRobot::Writers::STDOUTWriter  }
   let(:subject) { described_class.new board, toy }
+
+  let(:x_coordinate) { Faker::Number.unique.number(3).to_i }
+  let(:y_coordinate) { Faker::Number.unique.number(3).to_i }
+  let(:orientation) { Faker::TwinPeaks.unique.character }
 
   before do
     allow(toy).to receive :placed?
   end
 
   describe '#place_toy' do
-
-    let(:x_coordinate) { Faker::Number.unique.number(3).to_i }
-    let(:y_coordinate) { Faker::Number.unique.number(3).to_i }
-    let(:orientation) { Faker::TwinPeaks.unique.character }
 
     before do
       allow(toy).to receive :place
@@ -48,7 +49,7 @@ describe ToyRobot::Game do
       end
 
       it 'places the toy with the orientation' do
-        expect(toy).to have_received(:place).with anything, anything, orientation
+        expect(toy).to have_received(:place).with anything, anything, orientation.to_sym
       end
 
     end
@@ -150,12 +151,14 @@ describe ToyRobot::Game do
 
   describe '#report_toy_position' do
 
+    let(:report_toy_position) { subject.report_toy_position writer }
+
     before do
       allow(toy).to receive :report
     end
 
     it 'checks whether the toy is placed' do
-      subject.report_toy_position
+      report_toy_position
 
       expect(toy).to have_received :placed?
     end
@@ -164,12 +167,22 @@ describe ToyRobot::Game do
 
       before do
         allow(toy).to receive(:placed?).and_return true
+        allow(toy).to receive(:report).and_return ({
+            x_coordinate: x_coordinate,
+            y_coordinate: y_coordinate,
+            orientation: orientation
+        })
+        allow(writer).to receive :write
 
-        subject.report_toy_position
+        report_toy_position
       end
 
-      it 'reports the toys position and orientation' do
+      it 'gets the toys position and orientation' do
         expect(toy).to have_received :report
+      end
+
+      it 'writes the formatted message to the writer' do
+        expect(writer).to have_received(:write).with "#{x_coordinate},#{y_coordinate},#{orientation}"
       end
 
     end
@@ -179,7 +192,7 @@ describe ToyRobot::Game do
       before do
         allow(toy).to receive(:placed?).and_return false
 
-        subject.report_toy_position
+        report_toy_position
       end
 
       it 'does not report the toy position' do

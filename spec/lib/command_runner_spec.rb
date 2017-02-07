@@ -38,12 +38,8 @@ describe ToyRobot::CommandRunner do
 
         let(:command) { 'report' }
 
-        it 'tells the game to report the toys position and orientation' do
-          expect(game).to have_received :report_toy_position
-        end
-
-        it 'writes the report to the writer' do
-          expect(writer).to have_received(:write).with toy_position
+        it 'passes the writer to the game to report the toy position' do
+          expect(game).to have_received(:report_toy_position).with writer
         end
 
       end

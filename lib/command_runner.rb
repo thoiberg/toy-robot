@@ -27,9 +27,7 @@ module ToyRobot
     end
 
     def report
-      position = @game.report_toy_position
-
-      @writer.write position
+      @game.report_toy_position @writer
     end
 
     def left
