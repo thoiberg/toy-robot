@@ -38,7 +38,7 @@ module ToyRobot
     end
 
     def turn_counter_clockwise turn_count
-      turn_clockwise turn_count * -1
+      turn_clockwise -turn_count
     end
 
     def turn_clockwise turn_count

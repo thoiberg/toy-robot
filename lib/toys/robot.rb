@@ -10,14 +10,6 @@ module ToyRobot
         @orientation = orientation
       end
 
-      def report
-        {
-            x_coordinate: @x_coordinate,
-            y_coordinate: @y_coordinate,
-            orientation: @orientation
-        }
-      end
-
       private
 
       def x_coordinate

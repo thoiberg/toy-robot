@@ -6,6 +6,10 @@ module ToyRobot
         raise_not_implemented_error :place
       end
 
+      def placed?
+        x_coordinate && y_coordinate
+      end
+
       def move
         raise_not_implemented_error :move
       end

@@ -4,6 +4,10 @@ describe ToyRobot::Game do
   let(:toy) { instance_double ToyRobot::Toys::Robot }
   let(:subject) { described_class.new board, toy }
 
+  before do
+    allow(toy).to receive :placed?
+  end
+
   describe '#place_toy' do
 
     let(:x_coordinate) { Faker::Number.unique.number(3).to_i }
@@ -73,44 +77,70 @@ describe ToyRobot::Game do
     before do
       allow(toy).to receive(:new_position_if_moved).and_return [new_x, new_y]
       allow(toy).to receive :move
-      allow(board).to receive(:can_move_to?)
+      allow(board).to receive :can_move_to?
     end
 
-    it 'checks what the new position would be' do
+    it 'checks if the toy is placed' do
       subject.move_toy
 
-      expect(toy).to have_received :new_position_if_moved
+      expect(toy).to have_received :placed?
     end
 
-    it 'checks that the new position is valid on the board' do
-      subject.move_toy
-
-      expect(board).to have_received(:can_move_to?).with(new_x, new_y)
-    end
-
-    context 'when the new position is a valid position on the board' do
+    context 'when the robot is placed on the board' do
 
       before do
-        allow(board).to receive(:can_move_to?).with(new_x, new_y).and_return true
-
-        subject.move_toy
+        allow(toy).to receive(:placed?).and_return true
       end
 
-      it 'moves the toy' do
-        expect(toy).to have_received :move
+      it 'checks what the new position would be' do
+        subject.move_toy
+
+        expect(toy).to have_received :new_position_if_moved
+      end
+
+      it 'checks that the new position is valid on the board' do
+        subject.move_toy
+
+        expect(board).to have_received(:can_move_to?).with(new_x, new_y)
+      end
+
+      context 'and the new position is a valid position on the board' do
+
+        before do
+          allow(board).to receive(:can_move_to?).with(new_x, new_y).and_return true
+
+          subject.move_toy
+        end
+
+        it 'moves the toy' do
+          expect(toy).to have_received :move
+        end
+
+      end
+
+      context 'and the new position is not a valid position on the board' do
+
+        before do
+          allow(board).to receive(:can_move_to?).with(new_x, new_y).and_return false
+
+          subject.move_toy
+        end
+
+        it 'does not move the toy' do
+          expect(toy).not_to have_received :move
+        end
+
       end
 
     end
 
-    context 'when the new position is not a valid position on the board' do
+    context 'when the robot is not placed on the board' do
 
       before do
-        allow(board).to receive(:can_move_to?).with(new_x, new_y).and_return false
-
-        subject.move_toy
+        allow(toy).to receive(:placed?).and_return false
       end
 
-      it 'does not move the toy' do
+      it 'does not move the robot' do
         expect(toy).not_to have_received :move
       end
 
@@ -122,12 +152,40 @@ describe ToyRobot::Game do
 
     before do
       allow(toy).to receive :report
-
-      subject.report_toy_position
     end
 
-    it 'reports the toys position and orientation' do
-      expect(toy).to have_received :report
+    it 'checks whether the toy is placed' do
+      subject.report_toy_position
+
+      expect(toy).to have_received :placed?
+    end
+
+    context 'when the toy is placed' do
+
+      before do
+        allow(toy).to receive(:placed?).and_return true
+
+        subject.report_toy_position
+      end
+
+      it 'reports the toys position and orientation' do
+        expect(toy).to have_received :report
+      end
+
+    end
+
+    context 'when the toy is not placed' do
+
+      before do
+        allow(toy).to receive(:placed?).and_return false
+
+        subject.report_toy_position
+      end
+
+      it 'does not report the toy position' do
+        expect(toy).not_to have_received :report
+      end
+
     end
 
   end
@@ -136,12 +194,40 @@ describe ToyRobot::Game do
 
     before do
       allow(toy).to receive :rotate_left
-
-      subject.rotate_toy_left
     end
 
-    it 'rotates the toy to the left' do
-      expect(toy).to have_received :rotate_left
+    it 'checks whether the toy is placed' do
+      subject.rotate_toy_left
+
+      expect(toy).to have_received :placed?
+    end
+
+    context 'when the toy is placed' do
+
+      before do
+        allow(toy).to receive(:placed?).and_return true
+
+        subject.rotate_toy_left
+      end
+
+      it 'rotates the toy to the left' do
+        expect(toy).to have_received :rotate_left
+      end
+
+    end
+
+    context 'when the toy is not placed' do
+
+      before do
+        allow(toy).to receive(:placed?).and_return false
+
+        subject.rotate_toy_left
+      end
+
+      it 'does not rotate the toy' do
+        expect(toy).not_to have_received(:rotate_left)
+      end
+
     end
 
   end
@@ -150,12 +236,40 @@ describe ToyRobot::Game do
 
     before do
       allow(toy).to receive :rotate_right
-
-      subject.rotate_toy_right
     end
 
-    it 'rotates the toy to the right' do
-      expect(toy).to have_received :rotate_right
+    it 'checks whether the toy is placed' do
+      subject.rotate_toy_right
+
+      expect(toy).to have_received :placed?
+    end
+
+    context 'when the toy is placed' do
+
+      before do
+        allow(toy).to receive(:placed?).and_return true
+
+        subject.rotate_toy_right
+      end
+
+      it 'rotates the toy to the right' do
+        expect(toy).to have_received :rotate_right
+      end
+
+    end
+
+    context 'when the toy is not placed' do
+
+      before do
+        allow(toy).to receive(:placed?).and_return false
+
+        subject.rotate_toy_right
+      end
+
+      it 'does not rotate the toy' do
+        expect(toy).not_to have_received :rotate_right
+      end
+
     end
 
   end
