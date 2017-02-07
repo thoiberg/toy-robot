@@ -37,15 +37,6 @@ module ToyRobot
       orientation_movement_modifiers[orientation]
     end
 
-    def orientation_movement_modifiers
-      {
-          north: [0, 1],
-          east: [1, 0],
-          south: [0, -1],
-          west: [-1, 0]
-      }
-    end
-
     def turn_counter_clockwise turn_count
       turn_clockwise turn_count * -1
     end
@@ -56,8 +47,12 @@ module ToyRobot
       possible_orientations[new_orientation_index]
     end
 
+    def orientation_movement_modifiers
+      raise NotImplementedError.new "#{orientation_movement_modifiers} must be implemented to use the Movable mixin"
+    end
+
     def possible_orientations
-      %i{ north east south west }
+      raise NotImplementedError.new "#{orientation_movement_modifiers} must be implemented to use the Movable mixin"
     end
 
   end

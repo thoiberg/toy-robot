@@ -12,6 +12,7 @@ require_relative 'writer_factory'
 require_relative 'writers/all'
 
 require_relative 'movable'
+require_relative 'cardinal_directions_movable'
 
 require_relative 'toy_factory'
 require_relative 'toys/all'

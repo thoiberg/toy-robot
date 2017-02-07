@@ -25,7 +25,7 @@ def board
 end
 
 def robot
-
+  ToyRobot::ToyFactory.build_robot
 end
 
 def stdout_writer
