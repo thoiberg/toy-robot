@@ -3,11 +3,11 @@
 
 This app simulates a Robot on a table, allowing the user to pass in instructions to move the robot.
 
-This was written in Ruby 2.2.2, but has Travis CI builds to test:
+This was written in Ruby 2.4.0, but has Travis CI builds to test:
 
- - Ruby 2.0.0
- - Ruby 2.1.7
  - Ruby 2.2.2
+ - Ruby 2.3.3
+ - Ruby 2.4.0
 
 ## Setup
 
@@ -21,14 +21,14 @@ To install the all the dependencies needed for execution
 
 To use the application run the `toy_robot.rb' script with the command file as the argument
 
-    $ bundle exec toy_robot.rb <ROBOT_COMMANDS>
+    $ bundle exec toy-robot <ROBOT_COMMANDS_FILE>
 
-Where ROBOT_COMMANDS is the file path to a file containing valid commands. The `examples` directory has several files that can
-be used as tests.
+Where ROBOT_COMMANDS is the file path to a file containing valid commands. The `examples` directory has an example file that can
+be used as a test.
 
 ## toy-robot Commands
 
-The command file can use the any commands on the Robot class:
+The command file can use the following commands:
 
     place
     move

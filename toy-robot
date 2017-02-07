@@ -2,7 +2,6 @@
 
 require_relative 'lib/init'
 
-
 def main commands_file_path
   commands = yaml_parser.parse commands_file_path
   command_runner = create_command_runner
