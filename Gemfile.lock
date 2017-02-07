@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    cli-test (1.0.0)
     coderay (1.1.1)
     diff-lcs (1.3)
     docile (1.1.5)
@@ -13,6 +14,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    rake (12.0.0)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -37,8 +39,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cli-test
   faker
   pry
+  rake
   rspec
   simplecov
 

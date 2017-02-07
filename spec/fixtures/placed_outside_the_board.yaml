@@ -1,0 +1,3 @@
+commands:
+  - place -1,-1,north
+  - report

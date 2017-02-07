@@ -1,0 +1,4 @@
+commands:
+  - move
+  - place 0,0,north
+  - report
