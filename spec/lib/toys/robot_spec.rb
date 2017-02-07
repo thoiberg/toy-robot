@@ -5,11 +5,13 @@ describe ToyRobot::Toys::Robot do
   let(:orientation) { :north }
   let(:subject) { described_class.new }
 
-  before do
-    subject.place x_coordinate, y_coordinate, orientation
-  end
+  include_examples 'behaves like a toy'
 
   describe '#place' do
+
+    before do
+      subject.place x_coordinate, y_coordinate, orientation
+    end
 
     it 'places the robot given coordinates and orientation' do
       expect(subject.report).to eq ({
@@ -24,6 +26,7 @@ describe ToyRobot::Toys::Robot do
   describe '#move' do
 
     before do
+      subject.place x_coordinate, y_coordinate, orientation
       subject.move
     end
 
@@ -36,6 +39,7 @@ describe ToyRobot::Toys::Robot do
   describe '#new_position_if_moved' do
 
     before do
+      subject.place x_coordinate, y_coordinate, orientation
       subject.new_position_if_moved
     end
 
@@ -53,25 +57,11 @@ describe ToyRobot::Toys::Robot do
 
   end
 
-  describe '#report' do
-
-    let(:report) { subject.report }
-
-    it 'reports the current x coordinate' do
-      expect(report[:x_coordinate]).to eq x_coordinate
-    end
-
-    it 'reports the current y coordinate' do
-      expect(report[:y_coordinate]).to eq y_coordinate
-    end
-
-    it 'reports the current orientation' do
-      expect(report[:orientation]).to eq orientation
-    end
-
-  end
-
   describe '#rotate_left' do
+
+    before do
+      subject.place x_coordinate, y_coordinate, orientation
+    end
 
     [
         [:north, :west],
@@ -92,6 +82,10 @@ describe ToyRobot::Toys::Robot do
   end
 
   describe '#rotate_right' do
+
+    before do
+      subject.place x_coordinate, y_coordinate, orientation
+    end
 
     [
         [:north, :east],

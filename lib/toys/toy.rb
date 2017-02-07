@@ -7,7 +7,7 @@ module ToyRobot
       end
 
       def placed?
-        x_coordinate && y_coordinate
+        !!(x_coordinate && y_coordinate)
       end
 
       def move
