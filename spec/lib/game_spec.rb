@@ -1,7 +1,7 @@
 describe ToyRobot::Game do
 
-  let(:board) { double 'board' }
-  let(:toy) { double 'toy' }
+  let(:board) { instance_double ToyRobot::Board }
+  let(:toy) { instance_double ToyRobot::Toys::Robot }
   let(:subject) { described_class.new board, toy }
 
   describe '#place_toy' do
