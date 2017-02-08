@@ -48,11 +48,11 @@ module ToyRobot
     end
 
     def orientation_movement_modifiers
-      raise NotImplementedError.new "#{orientation_movement_modifiers} must be implemented to use the Movable mixin"
+      raise NotImplementedError.new 'orientation_movement_modifiers must be implemented to use the Movable mixin'
     end
 
     def possible_orientations
-      raise NotImplementedError.new "#{orientation_movement_modifiers} must be implemented to use the Movable mixin"
+      raise NotImplementedError.new 'possible_orientations must be implemented to use the Movable mixin'
     end
 
   end

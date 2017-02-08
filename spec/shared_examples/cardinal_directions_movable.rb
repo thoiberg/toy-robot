@@ -41,10 +41,6 @@ shared_examples 'can move and rotate on the cardinal directions' do
 
   describe '#rotate_left' do
 
-    before do
-      subject.place x_coordinate, y_coordinate, orientation
-    end
-
     [
         [:north, :west],
         [:west, :south],
@@ -64,10 +60,6 @@ shared_examples 'can move and rotate on the cardinal directions' do
   end
 
   describe '#rotate_right' do
-
-    before do
-      subject.place x_coordinate, y_coordinate, orientation
-    end
 
     [
         [:north, :east],

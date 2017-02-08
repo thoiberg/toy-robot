@@ -9,4 +9,7 @@ module ToyRobot
   class InvalidCommandError < ToyRobotError
   end
 
+  class InvalidOrientationError < ToyRobotError
+  end
+
 end
